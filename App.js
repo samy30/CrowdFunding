@@ -3,6 +3,7 @@ import LoginScreen from './WorkSpace/Screens/LoginScreen';
 import LoginEmailScreen from './WorkSpace/Screens/LoginEmailScreen';
 import SigninScreen from './WorkSpace/Screens/SigninScreen';
 import HomeScreen from './WorkSpace/Screens/HomeScreen';
+import ProfileScreen from './WorkSpace/Screens/ProfileScreen';
 const RootStack = createAppContainer(createStackNavigator({
   Screen1: {
     screen: LoginScreen,
@@ -20,6 +21,9 @@ const RootStack = createAppContainer(createStackNavigator({
     screen: HomeScreen,
     navigationOptions: {
 header: null, 
+    },
+    Screen5 : {
+      screen: ProfileScreen,
     },
   }
 }));

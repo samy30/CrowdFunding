@@ -3,6 +3,10 @@ import { View, ScrollView, Image, Text, TouchableOpacity, } from 'react-native';
 import { createBottomTabNavigator, createAppContainer, HeaderBackButton, createStackNavigator } from 'react-navigation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import SSC from '../SSC';
+import {db} from '../../config';
+
+const ref =db.ref('/associations');
+const refProducts =db.ref('/projects')
 
 class AssociationScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -31,6 +35,19 @@ class AssociationScreen extends React.Component {
         });
         this.RBSheet.open();
     }
+
+    fetchAssociations() {
+        ref.once("value").then(snap => {
+          let associations = snap.val();
+          this.setState({
+              Asso: associations,
+          })
+        });
+      }
+
+      
+    
+    
 
     render() {
         return (
@@ -100,15 +117,24 @@ class ThematiqueScreen extends React.Component {
         return (
             <View style={SSC.container}>
                 <Text style={{ fontSize: 24, color: '#68cefb' }}>Liste des thématiques associatives</Text>
-                <Image />
+                <Image style={{height: 124, width:124,}}
+                source={require('../Image/edu.png')} />
                 <Text style={{ fontSize: 16, color: '#68cefb' }}>Education</Text>
-                <Text></Text>
-                <Image />
+                <Text>L'éducation est l’ame la plus puissante qu’on puisse utiliser pour changer le monde”.
+Sur notre application chaque clic compte !
+Vous pouvez faire un don pour des projets éducatifs avec un simple clic.</Text>
+                <Image style={{height: 124, width:124,}}
+                source={require('../Image/env.png')}/>
                 <Text style={{ fontSize: 16, color: '#68cefb' }}>Environnement</Text>
-                <Text></Text>
-                <Image />
+                <Text>La transition écologique n’est pas uniquement une nécessité, mais également une opportunité pour contribuer à un développement plus durable. Sur notre application chaque clic compte !
+Vous pouvez faire un don pour des projets environnementaux  avec un simple clic.</Text>
+                <Image style={{height: 124, width:124,}}
+                source={require('../Image/orph.png')}/>
                 <Text style={{ fontSize: 16, color: '#68cefb' }}>Orphelinat</Text>
-                <Text></Text>
+                <Text>Faire sourire un enfant, un orphelin est la mission la plus difficile au monde! 
+Mais ensemble, nous pouvons le faire ! 
+Sur notre application chaque clic compte !
+Vous pouvez créer de la valeur dans la vie de plusieurs enfants, vous pouvez faire sourire plusieurs enfants avec un simple clic.</Text>
             </View>
         );
     }
@@ -136,7 +162,10 @@ N: '',
         };
     };
 
-
+    
+    don(){
+   //video     
+    };
     sendRBS(name, pic, theme, description, montantfinal, montantactuelle) {
         this.setState({
             N: name,
@@ -148,6 +177,15 @@ N: '',
         });
         this.RBSheet.open();
     };
+
+    fetchProducts() {
+        refProducts.once("value").then(snap => {
+          let products = snap.val();
+          this.setState({
+              Proj: products,
+          })
+        });
+      }
 
     render() {
         return (
@@ -210,7 +248,22 @@ N: '',
                         </View>
                         </View>
                     </View>
+                    <TouchableOpacity style={SSC.logM}
+                    onPress={() => {this.don()}}>
+<Text style={{ fontSize: 17, color: '#fff', }} >Faire un don</Text>
+                    </TouchableOpacity>
                 </RBSheet>
+                <Modal animationType='slide'
+                    transparent={false}
+                    visible={this.state.modalVisible}>
+                      <View style={[SSC.container, {justifyContent:'space-around', alignItems:'center'}]}>
+                    <TouchableOpacity style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
+                        onPress={()=> {this.setState({modalVisible: false,})}}>
+                        <Text style={{fontSize: 20,}}>( X )</Text>
+                    </TouchableOpacity>
+                    
+                    </View>
+                    </Modal>
             </View>
         );
     }
