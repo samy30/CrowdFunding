@@ -17,8 +17,10 @@ export default class LoginScreen extends Component {
                 <Image source={require('../Image/logo.png')}
                     style={{ width: 276, height: 40 }} />
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> {this.props.navigation.navigate('Screen5')}}>
                 <Image source={require('../Image/photo.png')}
                     style={{ width: 276, height: 214 }} />
+                    </TouchableOpacity>
                 <Text style={SSC.txt}>Se connecter par</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', }}>
                     <TouchableOpacity style={[SSC.logFG, { backgroundColor: '#dd4f43' }]}>
